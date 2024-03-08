@@ -3,7 +3,6 @@ const repo = 'dumi-java-docs'; // 项目名
 
 export default defineConfig({
   title: 'dumi-java-docs',
-  mode: 'site',
   themeConfig: {
     name: 'dumi docs',
   },
