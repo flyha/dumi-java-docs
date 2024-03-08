@@ -1,5 +1,8 @@
 ---
 nav: 基础
+group:
+  title: 基础
+  index: -1
 ---
 
 # Java 基础语法
@@ -492,3 +495,209 @@ System.out.println(flag); // 输出false
 | \|   | 逻辑或   | a\|b，a 和 b 都是 false，结果为 false，否则为 true |
 | ^    | 逻辑异或 | a^b，a 和 b 结果不同为 true，相同为 false          |
 | !    | 逻辑非   | !a，结果和 a 的结果正好相反                        |
+
+```java
+//定义变量
+int i = 10;
+int j = 20;
+int k = 30;
+
+//& “与”，并且的关系，只要表达式中有一个值为false，结果即为false
+System.out.println((i > j) & (i > k)); //false & false,输出false
+System.out.println((i < j) & (i > k)); //true & false,输出false
+System.out.println((i > j) & (i < k)); //false & true,输出false
+System.out.println((i < j) & (i < k)); //true & true,输出true
+System.out.println("--------");
+
+//| “或”，或者的关系，只要表达式中有一个值为true，结果即为true
+System.out.println((i > j) | (i > k)); //false | false,输出false
+System.out.println((i < j) | (i > k)); //true | false,输出true
+System.out.println((i > j) | (i < k)); //false | true,输出true
+System.out.println((i < j) | (i < k)); //true | true,输出true
+System.out.println("--------");
+
+//^ “异或”，相同为false，不同为true
+System.out.println((i > j) ^ (i > k)); //false ^ false,输出false
+System.out.println((i < j) ^ (i > k)); //true ^ false,输出true
+System.out.println((i > j) ^ (i < k)); //false ^ true,输出true
+System.out.println((i < j) ^ (i < k)); //true ^ true,输出false
+System.out.println("--------");
+
+//! “非”，取反
+System.out.println((i > j)); //false
+System.out.println(!(i > j)); //!false，,输出true
+```
+
+#### 短路逻辑运算符
+
+| 符号 | 作用   | 说明                         |
+| ---- | ------ | ---------------------------- |
+| &&   | 短路与 | 作用和&相同，但是有短路效果  |
+| \|\| | 短路或 | 作用和\|相同，但是有短路效果 |
+
+在逻辑与运算中，只要有一个表达式的值为 false，那么结果就可以判定为 false 了，没有必要将所有表达式的值都计算出来，短路与操作就有这样的效果，可以提高效率。同理在逻辑或运算中，一旦发现值为 true，右边的表达式将不再参与运算。
+
+- 逻辑与&，无论左边真假，右边都要执行。
+
+- 短路与&&，如果左边为真，右边执行；如果左边为假，右边不执行。
+
+- 逻辑或|，无论左边真假，右边都要执行。
+
+- 短路或||，如果左边为假，右边执行；如果左边为真，右边不执行。
+
+```java
+int x = 3;
+int y = 4;
+System.out.println((x++ > 4) & (y++ > 5)); // 两个表达都会运算
+System.out.println(x); // 4
+System.out.println(y); // 5
+
+System.out.println((x++ > 4) && (y++ > 5)); // 左边已经可以确定结果为false，右边不参与运算
+System.out.println(x); // 4
+System.out.println(y); // 4
+```
+
+### 三元运算符（理解）
+
+三元运算符语法格式：
+
+```java
+关系表达式 ? 表达式1 : 表达式2;
+```
+
+解释：问号前面的位置是判断的条件，判断结果为 boolean 型，为 true 时调用表达式 1，为 false 时调用表达式 2。其逻辑为：如果条件表达式成立或者满足则执行表达式 1，否则执行第二个。
+
+举例：
+
+```java
+int a = 10;
+int b = 20;
+int c = a > b ? a : b; // 判断 a>b 是否为真，如果为真取a的值，如果为假，取b的值
+```
+
+三元运算符案例：
+
+1、需求：动物园里有两只老虎，已知两只老虎的体重分别为 180kg、200kg，请用程序实现判断两只老虎的体重是否相同。
+
+```java
+public class OperatorTest01 {
+	public static void main(String[] args) {
+		//1：定义两个变量用于保存老虎的体重，单位为kg，这里仅仅体现数值即可。
+		int weight1 = 180;
+		int weight2 = 200;
+		//2：用三元运算符实现老虎体重的判断，体重相同，返回true，否则，返回false。
+		boolean b = weight1 == weight2 ? true : false;
+		//3：输出结果
+		System.out.println("b:" + b);
+	}
+}
+```
+
+2、需求：一座寺庙里住着三个和尚，已知他们的身高分别为 150cm、210cm、165cm，请用程序实现获取这三个和尚的最高身高。
+
+```java
+public class OperatorTest02 {
+	public static void main(String[] args) {
+		//1：定义三个变量用于保存和尚的身高，单位为cm，这里仅仅体现数值即可。
+		int height1 = 150;
+		int height2 = 210;
+		int height3 = 165;
+		//2：用三元运算符获取前两个和尚的较高身高值，并用临时身高变量保存起来。
+		int tempHeight = height1 > height2 ? height1 : height2;
+		//3：用三元运算符获取临时身高值和第三个和尚身高较高值，并用最大身高变量保存。
+		int maxHeight = tempHeight > height3 ? tempHeight : height3;
+		//4：输出结果
+		System.out.println("maxHeight:" + maxHeight);
+	}
+}
+```
+
+## 数据输入（应用）
+
+我们可以通过 Scanner 类来获取用户的输入。使用步骤如下：
+
+1、导包。Scanner 类在 java.util 包下，所以需要将该类导入。导包的语句需要定义在类的上面。
+
+```java
+import java.util.Scanner;
+```
+
+2、创建 Scanner 对象。
+
+```java
+Scanner sc = new Scanner(System.in);// 创建Scanner对象，sc表示变量名，其他均不可变
+```
+
+3、接收数据
+
+```java
+int i = sc.nextInt(); // 表示将键盘录入的值作为int数返回。
+```
+
+示例：
+
+```java
+import java.util.Scanner;
+public class ScannerDemo {
+	public static void main(String[] args) {
+		//创建对象
+		Scanner sc = new Scanner(System.in);
+		//接收数据
+		int x = sc.nextInt();
+		//输出数据
+		System.out.println("x:" + x);
+	}
+}
+```
+
+改写三个和尚案例，数据使用键盘录入。
+
+```java
+import java.util.Scanner;
+public class ScannerTest {
+	public static void main(String[] args) {
+		//身高未知，采用键盘录入实现。首先导包，然后创建对象。
+		Scanner sc = new Scanner(System.in);
+		//键盘录入三个身高分别赋值给三个变量。
+		System.out.println("请输入第一个和尚的身高：");
+		int height1 = sc.nextInt();
+		System.out.println("请输入第二个和尚的身高：");
+		int height2 = sc.nextInt();
+		System.out.println("请输入第三个和尚的身高：");
+		int height3 = sc.nextInt();
+		//用三元运算符获取前两个和尚的较高身高值，并用临时身高变量保存起来。
+		int tempHeight = height1 > height2 ? height1 : height2;
+		//用三元运算符获取临时身高值和第三个和尚身高较高值，并用最大身高变量保存。
+		int maxHeight = tempHeight > height3 ? tempHeight : height3;
+		//输出结果。
+		System.out.println("这三个和尚中身高最高的是：" + maxHeight +"cm");
+	}
+}
+```
+
+```java
+import java.util.Scanner;
+public class IfTest02 {
+	public static void main(String[] args) {
+		//小明的考试成绩未知，可以使用键盘录入的方式获取值
+		Scanner sc = new Scanner(System.in);
+		System.out.println("请输入一个分数：");
+		int score = sc.nextInt();
+		//由于奖励种类较多，属于多种判断，采用if...else...if格式实现
+		//为每种判断设置对应的条件
+		//为每种判断设置对应的奖励
+		//数据测试：正确数据，边界数据，错误数据
+		if(score>100 || score<0) {
+			System.out.println("你输入的分数有误");
+		} else if(score>=95 && score<=100) {
+			System.out.println("山地自行车一辆");
+		} else if(score>=90 && score<=94) {
+			System.out.println("游乐场玩一次");
+		} else if(score>=80 && score<=89) {
+			System.out.println("变形金刚玩具一个");
+		} else {
+			System.out.println("胖揍一顿");
+		}
+	}
+}
+```
