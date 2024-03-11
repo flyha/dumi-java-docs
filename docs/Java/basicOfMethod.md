@@ -411,3 +411,213 @@ public class MethodTest {
       }
   }
   ```
+
+### 方法重载练习（掌握）
+
+- 需求：使用方法重载的思想，设计比较两个整数是否相同的方法，兼容全整数类型（byte,short,int,long）
+
+* 思路：
+
+  - ① 定义比较两个数字的是否相同的方法 compare()方法，参数选择两个 int 型参数
+  - ② 定义对应的重载方法，变更对应的参数类型，参数变更为两个 long 型参数
+  - ③ 定义所有的重载方法，两个 byte 类型与两个 short 类型参数
+  - ④ 完成方法的调用，测试运行结果
+
+* 代码：
+
+  ```java
+  public class MethodTest {
+      public static void main(String[] args) {
+          //调用方法
+          System.out.println(compare(10, 20));
+          System.out.println(compare((byte) 10, (byte) 20));
+          System.out.println(compare((short) 10, (short) 20));
+          System.out.println(compare(10L, 20L));
+      }
+
+      //int
+      public static boolean compare(int a, int b) {
+          System.out.println("int");
+          return a == b;
+      }
+
+      //byte
+      public static boolean compare(byte a, byte b) {
+          System.out.println("byte");
+          return a == b;
+      }
+
+      //short
+      public static boolean compare(short a, short b) {
+          System.out.println("short");
+          return a == b;
+      }
+
+      //long
+      public static boolean compare(long a, long b) {
+          System.out.println("long");
+          return a == b;
+      }
+  }
+  ```
+
+## 方法的参数传递
+
+### 方法参数传递基本类型（理解）
+
+- 测试代码：
+
+  ```java
+  public class ArgsDemo01 {
+      public static void main(String[] args) {
+          int number = 100;
+          System.out.println("调用change方法前：" + number);
+          change(number);
+          System.out.println("调用change方法后：" + number);
+      }
+
+      public static void change(int number) {
+          number = 200;
+      }
+  }
+
+  ```
+
+* 结论：
+
+  - 基本数据类型的参数，形式参数的改变，不影响实际参数
+
+* 结论依据：
+
+  - 每个方法在栈内存中，都会有独立的栈空间，方法运行结束后就会弹栈消失
+
+    ![123](./images/d05-2.png)
+
+### 方法参数传递引用类型（理解）
+
+- 测试代码：
+
+  ```java
+  public class ArgsDemo02 {
+      public static void main(String[] args) {
+          int[] arr = {10, 20, 30};
+          System.out.println("调用change方法前：" + arr[1]);
+          change(arr);
+          System.out.println("调用change方法后：" + arr[1]);
+      }
+
+      public static void change(int[] arr) {
+          arr[1] = 200;
+      }
+  }
+
+  ```
+
+* 结论：
+
+  - 对于引用类型的参数，形式参数的改变，影响实际参数的值
+
+* 结论依据：
+
+  - 引用数据类型的传参，传入的是地址值，内存中会造成两个引用指向同一个内存的效果，所以即使方法弹栈，堆内存中的数据也已经是改变后的结果
+
+    ![d05](./images/d05-3.png)
+
+### 数组遍历（应用）
+
+- 需求：设计一个方法用于数组遍历，要求遍历的结果是在一行上的。例如：[11, 22, 33, 44, 55]
+
+- 思路：
+
+  - ① 因为要求结果在一行上输出，所以这里需要在学习一个新的输出语句 System.out.print(“内容”);
+
+    System.out.println(“内容”); 输出内容并换行
+
+    System.out.print(“内容”); 输出内容不换行
+
+    System.out.println(); 起到换行的作用
+
+  - ② 定义一个数组，用静态初始化完成数组元素初始化
+
+  - ③ 定义一个方法，用数组遍历通用格式对数组进行遍历
+
+  - ④ 用新的输出语句修改遍历操作
+
+  - ⑤ 调用遍历方法
+
+- 代码：
+
+  ```java
+  public class MethodTest01 {
+      public static void main(String[] args) {
+          //定义一个数组，用静态初始化完成数组元素初始化
+          int[] arr = {11, 22, 33, 44, 55};
+
+          //调用方法
+          printArray(arr);
+      }
+
+      //定义一个方法，用数组遍历通用格式对数组进行遍历
+      /*
+          两个明确：
+              返回值类型：void
+              参数：int[] arr
+       */
+      public static void printArray(int[] arr) {
+          System.out.print("[");
+          for(int x=0; x<arr.length; x++) {
+              if(x == arr.length-1) {
+                  System.out.print(arr[x]);
+              } else {
+                  System.out.print(arr[x]+", ");
+              }
+          }
+          System.out.println("]");
+      }
+  }
+  ```
+
+### 数组最大值（应用）
+
+- 需求：设计一个方法用于获取数组中元素的最大值
+
+- 思路：
+
+  - ① 定义一个数组，用静态初始化完成数组元素初始化
+  - ② 定义一个方法，用来获取数组中的最大值，最值的认知和讲解我们在数组中已经讲解过了
+  - ③ 调用获取最大值方法，用变量接收返回结果
+  - ④ 把结果输出在控制台
+
+- 代码：
+
+  ```java
+  public class MethodTest02 {
+      public static void main(String[] args) {
+          //定义一个数组，用静态初始化完成数组元素初始化
+          int[] arr = {12, 45, 98, 73, 60};
+
+          //调用获取最大值方法，用变量接收返回结果
+          int number = getMax(arr);
+
+          //把结果输出在控制台
+          System.out.println("number:" + number);
+      }
+
+      //定义一个方法，用来获取数组中的最大值
+      /*
+          两个明确：
+              返回值类型：int
+              参数：int[] arr
+       */
+      public static int getMax(int[] arr) {
+          int max = arr[0];
+
+          for(int x=1; x<arr.length; x++) {
+              if(arr[x] > max) {
+                  max = arr[x];
+              }
+          }
+          return max;
+      }
+  }
+  ```
