@@ -5,7 +5,9 @@ group:
   index: 0
 ---
 
-# 面向对象高级
+# 测试 <a href="https://player.bilibili.com/player.html?aid=60016166&cid=104514776&page=1&danmaku=0" target="_blank">演示视频</a>
+
+<iframe src="//player.bilibili.com/player.html?aid=60016166&cid=104514776&page=1&danmaku=0" allowfullscreen="allowfullscreen" width="100%" height="500" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>
 
 面向对象是写 Java 程序的核心套路，如何你不懂面向对象，那就相当于 Java 你白学了。
 
@@ -337,6 +339,73 @@ public class Student{
 关于 static 的应用我们再补充一个使用的技巧，叫做单例设计模式。
 
 所谓设计模式指的是，一类问题可能会有多种解决方案，而设计模式是在编程实践中，多种方案中的一种最优方案。
+
+```public class A {
+    // 2、定义一个类变量记住类的一个对象
+    private static A a = new A();
+
+    // 1、必须私有类的构造器
+    private A() {
+
+    }
+
+    // 3、定义一个类方法返回类的对象
+    public static A getObject(){
+        return a;
+    }
+}
+```
+
+```
+public class Test1 {
+    public static void main(String[] args) {
+        // 目标：掌握单例设计模式的写法。
+        A a1 = A.getObject();
+        A a2 = A.getObject();
+        System.out.println(a1);
+        System.out.println(a2);
+    }
+}
+```
+
+懒汉单例模式
+● 定义一个类，把构造器私有。
+● 定义一个静态变量存储一个对象。
+● 提供一个返回单例对象的方法
+
+```
+public class B {
+    // 2、定义一个类变量，用于存储这个类的一个对象。
+    private static B b;
+
+    // 1、把类的构造器私有
+    private B(){
+
+    }
+
+    // 3、定义一个类方法，这个方法要保证第一次调用时才创建一个对象，后面调用时都会用这同一个对象返回。
+    public static B getInstance(){
+        if(b == null){
+            System.out.println("第一次创建对象~");
+            b = new B();
+        }
+        return b;
+    }
+}
+```
+
+```
+/**
+ * 目标：掌握懒汉式单例的写法。
+ */
+public class Test2 {
+    public static void main(String[] args) {
+        B b1 = B.getInstance(); // 第一次拿对象
+        B b2 = B.getInstance();
+        System.out.println(b1 == b2);
+    }
+}
+```
 
 关于静态的使用到这里，我们就学习完了。
 

@@ -8,5 +8,6 @@
       "@@/*": [".dumi/tmp/*"]
     }
   },
+  "footer": "Open-source MIT Licensed | Copyright © 2019-present  Powered by self",
   "include": [".dumirc.ts"]
 }
